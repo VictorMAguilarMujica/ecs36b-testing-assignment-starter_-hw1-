@@ -50,6 +50,11 @@ TEST(CopyArrayTests, SimpleValuesAreSame) {
         }
         EXPECT_TRUE(found_match);
     }
+    for (int x = 1; x < len * 2;)
+    {
+        EXPECT_EQ(frequency_table[x], 0);
+        x += 2;
+    }
 
     free(original_arr);
 
