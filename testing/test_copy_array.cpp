@@ -13,6 +13,20 @@ TEST(CopyArrayTests, SimpleValuesAreSame) {
      * Don't forget to free any memory that was dynamically allocated as part of your test.
      */
 
+    int* original_arr = (int*)malloc(sizeof(int) * 3);
+    original_arr[0] = 3;
+    original_arr[1] = 2;
+    original_arr[2] = 1;
+
+    int len = 3;
+
+    int* new_arr = copy_array(original_arr, len);
+    for (int i = 0; i < len; i++)
+    {
+        EXPECT_EQ(original_arr[i], new_arr[i]);
+    }
+    free(original_arr);
+
 
 }
 
@@ -21,6 +35,20 @@ TEST(CopyArrayTests, SimpleOriginalDoesNotChange) {
      * Check that the  values in the original array did not change.
      * Don't forget to free any memory that was dynamically allocated as part of your test.
      */
+    int* original_arr = (int*)malloc(sizeof(int) * 3);
+    original_arr[0] = 3;
+    original_arr[1] = 2;
+    original_arr[2] = 1;
+
+    int len = 3;
+
+    int* new_arr = copy_array(original_arr, len);
+
+    EXPECT_EQ(original_arr[0], 3);
+    EXPECT_EQ(original_arr[1], 2);
+    EXPECT_EQ(original_arr[2], 1);
+
+    free(original_arr);
 
 }
 
@@ -30,6 +58,24 @@ TEST(CopyArrayTests, SimpleCopyWasMade) {
      * (ar and copy point to different locations in memory and no parts of the two arrays overlap)
      * Don't forget to free any memory that was dynamically allocated as part of your test.
      */
+
+    int* original_arr = (int*)malloc(sizeof(int) * 3);
+    original_arr[0] = 3;
+    original_arr[1] = 2;
+    original_arr[2] = 1;
+
+    int len = 3;
+
+    int* new_arr = copy_array(original_arr, len);
+
+    for (int i = 0; i < len; i++)
+    {
+        for (int j = 0; j < len; j++)
+        {
+            EXPECT_NE(&original_arr[i], &new_arr[j]);
+        }
+    }
+    free(original_arr);
 
 }
 

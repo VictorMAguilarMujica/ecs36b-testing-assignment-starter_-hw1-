@@ -10,7 +10,20 @@ TEST(GetSortedTests, SimpleSortSortedArray) {
      * Don't forget to free any memory that was dynamically allocated as part of your test.
      */
 
+    int* original_arr = (int*)malloc(sizeof(int) * 3);
+    original_arr[0] = 1;
+    original_arr[1] = 2;
+    original_arr[2] = 3;
 
+    int len = 3;
+
+    int* sorted_arr = get_sorted(original_arr, len);
+    for (int i = 0; i < len - 1; i++)
+    {
+        EXPECT_TRUE(sorted_arr[i] <= sorted_arr[ i + 1]);
+    }
+
+    free(original_arr);
 }
 
 TEST(GetSortedTests, SimpleSortReverseSortedArray) {
@@ -19,6 +32,20 @@ TEST(GetSortedTests, SimpleSortReverseSortedArray) {
      * Don't forget to free any memory that was dynamically allocated as part of your test.
      */
 
+    int* original_arr = (int*)malloc(sizeof(int) * 3);
+    original_arr[0] = 3;
+    original_arr[1] = 2;
+    original_arr[2] = 1;
+
+    int len = 3;
+
+    int* sorted_arr = get_sorted(original_arr, len);
+    for (int i = 0; i < len - 1; i++)
+    {
+        EXPECT_TRUE(sorted_arr[i] <= sorted_arr[ i + 1]) << "At i = " << i << " sorted_arr[i] = " << sorted_arr[i] << " and sorted_arr[i + 1] = " << sorted_arr[i + 1];
+    }
+
+    free(original_arr);
 }
 
 TEST(GetSortedTests, SimpleSortAverageArray) {
@@ -27,6 +54,22 @@ TEST(GetSortedTests, SimpleSortAverageArray) {
      * Don't forget to free any memory that was dynamically allocated as part of your test.
      */
 
+    int* original_arr = (int*)malloc(sizeof(int) * 5);
+    original_arr[0] = 3;
+    original_arr[1] = 1;
+    original_arr[2] = 2;
+    original_arr[3] = 5;
+    original_arr[4] = 4;
+
+    int len = 5;
+
+    int* sorted_arr = get_sorted(original_arr, len);
+    for (int i = 0; i < len - 1; i++)
+    {
+        EXPECT_TRUE(sorted_arr[i] <= sorted_arr[ i + 1]) << "At i = " << i << " sorted_arr[i] = " << sorted_arr[i] << " and sorted_arr[i + 1] = " << sorted_arr[i + 1];
+    }
+
+    free(original_arr);
 
 }
 
@@ -35,6 +78,24 @@ TEST(GetSortedTests, SimpleSortArrayWithDuplicates) {
      * Check that we can sort an array where there are duplicate elements in it.
      * Don't forget to free any memory that was dynamically allocated as part of your test.
      */
+
+    int* original_arr = (int*)malloc(sizeof(int) * 3);
+    original_arr[0] = 3;
+    original_arr[1] = 1;
+    original_arr[2] = 2;
+    original_arr[3] = 2;
+    original_arr[4] = 4;
+
+    int len = 5;
+
+    int* sorted_arr = get_sorted(original_arr, len);
+    for (int i = 0; i < len - 1; i++)
+    {
+        EXPECT_TRUE(sorted_arr[i] <= sorted_arr[ i + 1]) << "At i = " << i << " sorted_arr[i] = " << sorted_arr[i] << " and sorted_arr[i + 1] = " << sorted_arr[i + 1];
+    }
+
+    free(original_arr);
+
 
 
 }
