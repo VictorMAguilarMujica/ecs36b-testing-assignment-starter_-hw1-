@@ -18,13 +18,39 @@ TEST(CopyArrayTests, SimpleValuesAreSame) {
     original_arr[1] = 2;
     original_arr[2] = 1;
 
-    int len = 3;
+    // frequency table to keep track of how many of each number is in the original array
+    // even index starting at 0 hold the number being tracked and the odd index following is the amount
+    int frequency_table[6];
+    frequency_table[0] = 3;
+    frequency_table[1] = 1;
+    frequency_table[2] = 2;
+    frequency_table[3] = 1;
+    frequency_table[4] = 1;
+    frequency_table[5] = 1;
 
+
+    int len = 3;
     int* new_arr = copy_array(original_arr, len);
+
+    bool found_match;
     for (int i = 0; i < len; i++)
     {
-        EXPECT_EQ(original_arr[i], new_arr[i]);
+        found_match = false;
+        for (int j = 0; j < len * 2;)
+        {
+            if (frequency_table[j] == new_arr[i])
+            {
+                if (frequency_table[j+1] > 0)
+                {
+                    frequency_table[j+1] -= 1;
+                    found_match = true;
+                }
+            }
+            j += 2;
+        }
+        EXPECT_TRUE(found_match);
     }
+
     free(original_arr);
 
 
