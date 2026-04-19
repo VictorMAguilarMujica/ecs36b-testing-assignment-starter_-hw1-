@@ -84,6 +84,7 @@ TEST(CopyArrayTests, SimpleOriginalDoesNotChange) {
     EXPECT_EQ(original_arr[2], 1);
 
     free(original_arr);
+    free(new_arr);
 
 }
 
@@ -130,6 +131,8 @@ RC_GTEST_PROP(CopyArrayTests,
     bool copy_and_og_same_vals = elements_in_vector_and_array_are_same(values, numbers);
     RC_ASSERT(copy_and_og_same_vals == true);
 
+    free(new_arr);
+
 
 }
 
@@ -151,12 +154,15 @@ RC_GTEST_PROP(CopyArrayTests,
     {
         stored_vals[i] = numbers[i];
     }
+
     int* new_arr = copy_array(numbers, size);
 
     for (int j = 0; j < size; j++)
     {
         RC_ASSERT(numbers[j] == stored_vals[j]);
     }
+
+    free(new_arr);
 
 
 }
@@ -170,6 +176,19 @@ RC_GTEST_PROP(CopyArrayTests,
   * (ar and copy point to different locations in memory and no parts of the two arrays overlap)
   * Don't forget to free any memory that was dynamically allocated as part of your test.
   */
+
+    int size = values.size();
+    int numbers[size];
+    copy_vector_to_array(values, numbers);
+    int* new_arr = copy_array(numbers, size);
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < size; j++)
+        {
+            RC_ASSERT(&numbers[i] != &new_arr[j]);
+        }
+    }
+    free(new_arr);
 
 }
 
