@@ -66,23 +66,27 @@ int temp = *a;
 Line number(s) of the bugs.
 
 ```c++
-Copy of the buggy code
+int* sorted_ar = copy_array(ar, len);
+make_sorted(ar, len);
+return sorted_ar;
 ```
 
 ### How the bug was located
 
-Explain how you found the bug
+I found the bug when seeing that the test_copy_array tests were failing and I went to see why that was. As I went down the lines of code in sorting.cpp I saw that when calling make_sorted() the variable ar is passed which when tracked back to main.cpp is the address of the given_numbers array or in other words the original array. This means that it was passing the address of the original array to sort instead of the copy  
 
 ### Description
 
-Describe the bug
+when calling the make_sorted() function it passes in ar variable, which holds the address of the original array, instead of passing in the address of the copy just created to be sorted.
 
 ### Fix
 
-Explain how you fixed the bug
+I fixed the code by passing in sorted_ar, the address of the copy, instead of ar, the address of the original array.
 
 ```c++
-Copy of the fixed code
+int* sorted_ar = copy_array(ar, len);
+make_sorted(sorted_ar, len);
+return sorted_ar;
 ```
 
 ### Bug 3
@@ -92,21 +96,26 @@ Copy of the fixed code
 Line number(s) of the bugs.
 
 ```c++
-Copy of the buggy code
+int* copy = ar;
+return copy;
 ```
 
 ### How the bug was located
 
-Explain how you found the bug
+I found the bug when doing my initial pass through the code, when I was supposed to think about what tests I would write for each function before I looked at the tests I was supposed to write. I noticed that the function was just returning the address that was passed into the function without doing anything else.
 
 ### Description
 
-Describe the bug
+The bug is that the function doesn't create a copy, it just returns the address of the original array which was already passed into the function.
 
 ### Fix
 
-Explain how you fixed the bug
+I fixed the code by dynamically allocating space for the copy, the space being equal to the length of the original array. This was so that the copy of the array created in this function can be accessed after this function finishes and its scope ends. After the space has been allocated, then I use a for loop to assign each index of the copy with the same value of the original array at that same index.
 
 ```c++
-Copy of the fixed code
+int* copy = (int*)malloc(len * sizeof(int));
+for (int i = 0; i < len; i++)
+{
+  copy[i] = ar[i];
+}
 ```

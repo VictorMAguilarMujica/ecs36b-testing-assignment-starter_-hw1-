@@ -10,7 +10,7 @@ int* get_sorted(int* ar, int len) {
  */
 
   int* sorted_ar = copy_array(ar, len);
-  make_sorted(ar, len);
+  make_sorted(sorted_ar, len);
   return sorted_ar;
 }
 
@@ -33,7 +33,12 @@ int* copy_array(int* ar, int len) {
   * @param len: The length of the array to copy
   * @return: A copy of ar
   */
-  int* copy = ar;
+  int* copy = (int*)malloc(len * sizeof(int));
+  for (int i = 0; i < len; i++)
+  {
+    copy[i] = ar[i];
+  }
+  // int* copy = ar;
   return copy;
 }
 

@@ -35,11 +35,14 @@ TEST(CopyArrayTests, SimpleValuesAreSame) {
     bool found_match;
     for (int i = 0; i < len; i++)
     {
+
         found_match = false;
         for (int j = 0; j < len * 2;)
         {
+
             if (frequency_table[j] == new_arr[i])
             {
+
                 if (frequency_table[j+1] > 0)
                 {
                     frequency_table[j+1] -= 1;
@@ -57,6 +60,7 @@ TEST(CopyArrayTests, SimpleValuesAreSame) {
     }
 
     free(original_arr);
+    free(new_arr);
 
 
 }
@@ -119,6 +123,13 @@ RC_GTEST_PROP(CopyArrayTests,
      * Check that the values in the copy are the same as the values in the original array.
      * Don't forget to free any memory that was dynamically allocated as part of your test.
      */
+    int size = values.size();
+    int numbers[size];
+    copy_vector_to_array(values, numbers);
+    int* new_arr = copy_array(numbers, size);
+    bool copy_and_og_same_vals = elements_in_vector_and_array_are_same(values, numbers);
+    RC_ASSERT(copy_and_og_same_vals == true);
+
 
 }
 
@@ -130,6 +141,23 @@ RC_GTEST_PROP(CopyArrayTests,
      * Check that the  values in the original array did not change.
      * Don't forget to free any memory that was dynamically allocated as part of your test.
      */
+
+    int size = values.size();
+    int numbers[size];
+    copy_vector_to_array(values, numbers);
+    // storing each of the value sin the original array
+    int stored_vals[sizeof(numbers)/sizeof(int)];
+    for (unsigned int i = 0; i < (sizeof(numbers)/sizeof(int)); i++)
+    {
+        stored_vals[i] = numbers[i];
+    }
+    int* new_arr = copy_array(numbers, size);
+
+    for (int j = 0; j < size; j++)
+    {
+        RC_ASSERT(numbers[j] == stored_vals[j]);
+    }
+
 
 }
 
