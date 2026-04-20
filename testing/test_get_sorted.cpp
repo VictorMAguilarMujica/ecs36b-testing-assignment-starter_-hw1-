@@ -10,10 +10,7 @@ TEST(GetSortedTests, SimpleSortSortedArray) {
      * Don't forget to free any memory that was dynamically allocated as part of your test.
      */
 
-    int* original_arr = (int*)malloc(sizeof(int) * 3);
-    original_arr[0] = 1;
-    original_arr[1] = 2;
-    original_arr[2] = 3;
+    int original_arr[3] = {1, 2, 3};
 
     int len = 3;
 
@@ -23,7 +20,7 @@ TEST(GetSortedTests, SimpleSortSortedArray) {
         EXPECT_TRUE(sorted_arr[i] <= sorted_arr[ i + 1]);
     }
 
-    free(original_arr);
+    free(sorted_arr);
 }
 
 TEST(GetSortedTests, SimpleSortReverseSortedArray) {
@@ -32,20 +29,17 @@ TEST(GetSortedTests, SimpleSortReverseSortedArray) {
      * Don't forget to free any memory that was dynamically allocated as part of your test.
      */
 
-    int* original_arr = (int*)malloc(sizeof(int) * 3);
-    original_arr[0] = 3;
-    original_arr[1] = 2;
-    original_arr[2] = 1;
+    int original_arr[3] = {3, 2, 1};
 
     int len = 3;
 
     int* sorted_arr = get_sorted(original_arr, len);
     for (int i = 0; i < len - 1; i++)
     {
-        EXPECT_TRUE(sorted_arr[i] <= sorted_arr[ i + 1]) << "At i = " << i << " sorted_arr[i] = " << sorted_arr[i] << " and sorted_arr[i + 1] = " << sorted_arr[i + 1];
+        EXPECT_TRUE(sorted_arr[i] <= sorted_arr[ i + 1]);
     }
 
-    free(original_arr);
+    free(sorted_arr);
 }
 
 TEST(GetSortedTests, SimpleSortAverageArray) {
@@ -54,22 +48,17 @@ TEST(GetSortedTests, SimpleSortAverageArray) {
      * Don't forget to free any memory that was dynamically allocated as part of your test.
      */
 
-    int* original_arr = (int*)malloc(sizeof(int) * 5);
-    original_arr[0] = 3;
-    original_arr[1] = 1;
-    original_arr[2] = 2;
-    original_arr[3] = 5;
-    original_arr[4] = 4;
+    int original_arr[5] = {3, 1, 2, 5, 4};
 
     int len = 5;
 
     int* sorted_arr = get_sorted(original_arr, len);
     for (int i = 0; i < len - 1; i++)
     {
-        EXPECT_TRUE(sorted_arr[i] <= sorted_arr[ i + 1]) << "At i = " << i << " sorted_arr[i] = " << sorted_arr[i] << " and sorted_arr[i + 1] = " << sorted_arr[i + 1];
+        EXPECT_TRUE(sorted_arr[i] <= sorted_arr[ i + 1]);
     }
 
-    free(original_arr);
+    free(sorted_arr);
 
 }
 
@@ -79,22 +68,17 @@ TEST(GetSortedTests, SimpleSortArrayWithDuplicates) {
      * Don't forget to free any memory that was dynamically allocated as part of your test.
      */
 
-    int* original_arr = (int*)malloc(sizeof(int) * 3);
-    original_arr[0] = 3;
-    original_arr[1] = 1;
-    original_arr[2] = 2;
-    original_arr[3] = 2;
-    original_arr[4] = 4;
+    int original_arr[5] = {3, 1, 2, 5, 2};
 
     int len = 5;
 
     int* sorted_arr = get_sorted(original_arr, len);
     for (int i = 0; i < len - 1; i++)
     {
-        EXPECT_TRUE(sorted_arr[i] <= sorted_arr[ i + 1]) << "At i = " << i << " sorted_arr[i] = " << sorted_arr[i] << " and sorted_arr[i + 1] = " << sorted_arr[i + 1];
+        EXPECT_TRUE(sorted_arr[i] <= sorted_arr[ i + 1]);
     }
 
-    free(original_arr);
+    free(sorted_arr);
 
 
 
@@ -106,20 +90,22 @@ TEST(GetSortedTests, SimpleOriginalDoesNotChange) {
      * Don't forget to free any memory that was dynamically allocated as part of your test.
      */
 
-    int* original_arr = (int*)malloc(sizeof(int) * 3);
-    original_arr[0] = 3;
-    original_arr[1] = 2;
-    original_arr[2] = 1;
+    int original_arr[3] = {2, 1, 3};
 
-    int len = 3;
+    int stored_vals[3];
+    for (unsigned int i = 0; i < 3; i++)
+    {
+        stored_vals[i] = original_arr[i];
+    }
 
-    int* new_arr = get_sorted(original_arr, len);
+    int* sorted_arr = get_sorted(original_arr, 3);
 
-    EXPECT_EQ(original_arr[0], 3);
-    EXPECT_EQ(original_arr[1], 2);
-    EXPECT_EQ(original_arr[2], 1);
+    for (int i = 0; i < 3; i++)
+    {
+        EXPECT_EQ(original_arr[i], stored_vals[i]);
+    }
 
-    free(original_arr);
+    free(sorted_arr);
 
 }
 
@@ -130,23 +116,18 @@ TEST(GetSortedTests, SimpleCopyWasMade) {
      * Don't forget to free any memory that was dynamically allocated as part of your test.
      */
 
-    int* original_arr = (int*)malloc(sizeof(int) * 3);
-    original_arr[0] = 3;
-    original_arr[1] = 2;
-    original_arr[2] = 1;
+    int original_arr[3] = {3, 2, 1};
 
-    int len = 3;
+    int* new_arr = get_sorted(original_arr, 3);
 
-    int* new_arr = get_sorted(original_arr, len);
-
-    for (int i = 0; i < len; i++)
+    for (int i = 0; i < 3; i++)
     {
-        for (int j = 0; j < len; j++)
+        for (int j = 0; j < 3; j++)
         {
             EXPECT_NE(&original_arr[i], &new_arr[j]);
         }
     }
-    free(original_arr);
+    free(new_arr);
 
 
 }
@@ -160,6 +141,17 @@ RC_GTEST_PROP(GetSortedTests,
      * Don't forget to free any memory that was dynamically allocated as part of this test
      */
 
+
+    int size = values.size();
+    int numbers[size];
+    copy_vector_to_array(values, numbers);
+    int* new_arr = get_sorted(numbers, size);
+    for (int i = 0; i < size - 1; i++)
+    {
+        RC_ASSERT(new_arr[i] <= new_arr[i+1]);
+    }
+
+    free(new_arr);
 }
 
 RC_GTEST_PROP(GetSortedTests,
@@ -171,6 +163,25 @@ RC_GTEST_PROP(GetSortedTests,
      * Don't forget to free any memory that was dynamically allocated as part of your test.
      */
     ;
+
+    int size = values.size();
+    int numbers[size];
+    copy_vector_to_array(values, numbers);
+
+    int stored_vals[size];
+    for (int i = 0; i < size; i++)
+    {
+        stored_vals[i] = numbers[i];
+    }
+
+    int* sorted_arr = get_sorted(numbers, size);
+
+    for (int i = 0; i < size; i++)
+    {
+        EXPECT_EQ(numbers[i], stored_vals[i]);
+    }
+
+    free(sorted_arr);
 }
 
 RC_GTEST_PROP(GetSortedTests,
@@ -183,6 +194,20 @@ RC_GTEST_PROP(GetSortedTests,
      * Don't forget to free any memory that was dynamically allocated as part of your test.
      */
 
+    int size = values.size();
+    int original_arr[size];
+    copy_vector_to_array(values, original_arr);
+
+    int* new_arr = get_sorted(original_arr, size);
+
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < size; j++)
+        {
+            EXPECT_NE(&original_arr[i], &new_arr[j]);
+        }
+    }
+    free(new_arr);
 }
 
 
